@@ -1,3 +1,6 @@
 [submodule "personal/themes/base16"]
 	path = personal/themes/base16
 	url = https://github.com/htdvisser/hugo-base16-theme.git
+[submodule "personal/themes/terminal"]
+	path = personal/themes/terminal
+	url = https://github.com/panr/hugo-theme-terminal.git
