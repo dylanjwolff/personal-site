@@ -1,5 +1,6 @@
 module Main exposing (main)
 
+import Markdown
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
@@ -10,6 +11,7 @@ import Url.Parser as UrlParser exposing ((</>), Parser, s, top)
 import Bootstrap.Navbar as Navbar
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
+import Bootstrap.Grid.Row as Row 
 import Bootstrap.Card as Card
 import Bootstrap.Card.Block as Block
 import Bootstrap.Button as Button
@@ -174,32 +176,39 @@ mainContent model =
 
 
 pageHome : Model -> List (Html Msg)
-pageHome model =
-    [ h1 [] [ text "Home" ]
-    , Grid.row []
-        [ Grid.col []
-            [ Card.config [ Card.outlinePrimary ]
-                |> Card.headerH4 [] [ text "Getting started" ]
-                |> Card.block []
-                    [ Block.text [] [ text "Getting started is real easy. Just click the start button." ]
-                    , Block.custom <|
-                        Button.linkButton
-                            [ Button.primary, Button.attrs [ href "#getting-started" ] ]
-                            [ text "Start" ]
-                    ]
-                |> Card.view
+pageHome model = [
+        Grid.row [] [
+            Grid.col [] [
+                Html.br [] []
             ]
-        , Grid.col []
-            [ Card.config [ Card.outlineDanger ]
-                |> Card.headerH4 [] [ text "Modules" ]
-                |> Card.block []
-                    [ Block.text [] [ text "Check out the modules overview" ]
-                    , Block.custom <|
-                        Button.linkButton
-                            [ Button.primary, Button.attrs [ href "#modules" ] ]
-                            [ text "Module" ]
-                    ]
-                |> Card.view
+        ],
+        Grid.row [ Row.betweenXs ] [
+            Grid.col [ Col.orderLg12] [
+                div []
+                    <| Markdown.toHtml Nothing "## About Me: \n I'm a graduate student at ETH Zurich pursuing a masters in Computer Science with a focus in Information Security. Specifically I am interested in leveraging static and dynamic program analysis (and verification) techniques to find and prevent bugs in software. Before starting my masters, I worked at Mathworks on a variety of projects, mostly involving the testing and deployment infrastructure for web applications. "
+            ],
+            Grid.col [ Col.orderLg1 ] [
+                img [src "goat_cosine.png", height 500, width 500] [],
+                Html.br [] [] 
+            ]
+        ],
+        Grid.row [] [
+            Grid.col [] [
+                Html.br [] []
+            ]
+        ],
+        Grid.row [ Row.aroundXs ] [
+            Grid.col [] [
+                div []
+                    <| Markdown.toHtml Nothing "## Fun Facts: \n I'm a recovering ultimate frisbee addict, after 12 years of competative play, starting in high school. In that time I played in two different semi-professional leagues and also won a world championship in 2013 with team USA in Toronto."
+            ],
+            Grid.col [] [
+                img [src "fris_cosine.png", height 500, width 500] []
+            ]            
+        ],
+        Grid.row [] [
+            Grid.col [] [
+                Html.br [] []
             ]
         ]
     ]
