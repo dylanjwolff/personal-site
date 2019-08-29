@@ -18,7 +18,8 @@ import Bootstrap.Button as Button
 import Bootstrap.ListGroup as Listgroup
 import Bootstrap.Modal as Modal
 import Bootstrap.Utilities.Flex as Flex
-
+import HomeMD
+import CvMD
 
 type alias Flags =
     {}
@@ -33,7 +34,7 @@ type alias Model =
 type Page
     = Home
     | CV
-    | Modules
+    | Projects
     | NotFound
 
 
@@ -128,7 +129,7 @@ routeParser =
     UrlParser.oneOf
         [ UrlParser.map Home top
         , UrlParser.map CV (s "CV")
-        , UrlParser.map Modules (s "modules")
+        , UrlParser.map Projects (s "projects")
         ]
 
 
@@ -154,7 +155,7 @@ menu model =
         |> Navbar.brand [ href "#" ] [ text "Dylan Wolff" ]
         |> Navbar.items
             [ Navbar.itemLink [ href "#CV" ] [ text "CV" ]
-            , Navbar.itemLink [ href "#modules" ] [ text "Modules" ]
+            , Navbar.itemLink [ href "#projects" ] [ text "Projects" ]
             , Navbar.itemLink [ ] [ ]
             ]
         |> Navbar.customItems [
@@ -182,8 +183,8 @@ mainContent model =
             CV ->
                 pageCV model
 
-            Modules ->
-                pageModules model
+            Projects ->
+                pageProjects model
 
             NotFound ->
                 pageNotFound
@@ -199,7 +200,7 @@ pageHome model = [
         Grid.row [ Row.betweenXs ] [
             Grid.col [ Col.md6, Col.orderMd12] [
                 div []
-                    <| Markdown.toHtml Nothing "## About Me: \n I'm a graduate student at ETH Zurich pursuing a masters in Computer Science with a focus in Information Security. Specifically I am interested in leveraging static and dynamic program analysis (and verification) techniques to find and prevent bugs in software. Before starting my masters, I worked at Mathworks on a variety of projects, mostly involving the testing and deployment infrastructure for web applications. "
+                    <| Markdown.toHtml Nothing HomeMD.aboutMe
             ],
             Grid.col [ Col.md6, Col.orderMd1 ] [
                 img [src "goat_cosine.png", class "img-fluid"] [],
@@ -214,7 +215,7 @@ pageHome model = [
         Grid.row [ Row.aroundXs ] [
             Grid.col [ Col.md6 ] [
                 div []
-                    <| Markdown.toHtml Nothing "## Fun Facts: \n I'm a recovering ultimate frisbee addict, after 12 years of competative play, starting in high school. In that time I played in two different semi-professional leagues and also won a world championship in 2013 with team USA in Toronto."
+                    <| Markdown.toHtml Nothing HomeMD.funFacts
             ],
             Grid.col [ Col.md6 ] [
                 img [src "fris_cosine.png", class "img-fluid"] []
@@ -234,28 +235,22 @@ pageCV model =
         Grid.row [] [
             Grid.col [] [
                 div []
-                    <| Markdown.toHtml Nothing "### EDUCATION \n ETHZ, BC"
+                    <| Markdown.toHtml Nothing CvMD.cv
             ]
         ]
 
     ]
 
 
-pageModules : Model -> List (Html Msg)
-pageModules model =
-    [ h1 [] [ text "Modules" ]
-    , Listgroup.ul
-        [ Listgroup.li [] [ text "Alert" ]
-        , Listgroup.li [] [ text "Badge" ]
-        , Listgroup.li [] [ text "Card" ]
-        ]
-    ]
+pageProjects : Model -> List (Html Msg)
+pageProjects model =
+    [ h1 [] [ text "Projects" ] ]
 
 
 pageNotFound : List (Html Msg)
 pageNotFound =
     [ h1 [] [ text "Not found" ]
-    , text "SOrry couldn't find that page"
+    , text "Sorry couldn't find that page"
     ]
 
 
