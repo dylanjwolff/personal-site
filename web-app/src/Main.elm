@@ -17,6 +17,7 @@ import Bootstrap.Card.Block as Block
 import Bootstrap.Button as Button
 import Bootstrap.ListGroup as Listgroup
 import Bootstrap.Modal as Modal
+import Bootstrap.Utilities.Flex as Flex
 
 
 type alias Flags =
@@ -154,7 +155,20 @@ menu model =
         |> Navbar.items
             [ Navbar.itemLink [ href "#CV" ] [ text "CV" ]
             , Navbar.itemLink [ href "#modules" ] [ text "Modules" ]
+            , Navbar.itemLink [ ] [ ]
             ]
+        |> Navbar.customItems [
+            Navbar.customItem 
+                <| div [] [
+                    a [href "https://github.com/wolffdy"] [
+                        img [src "GitHub-Mark-Light-64px.png", height 32, width 32] []
+                    ],
+                    text "\t",
+                    a [href "https://www.linkedin.com/in/dylan-j-wolff"] [
+                        img [src "linkedin-light.png", height 32, width 32] []
+                    ]
+                ]
+        ]
         |> Navbar.view model.navState
 
 
@@ -217,13 +231,6 @@ pageHome model = [
 pageCV : Model -> List (Html Msg)
 pageCV model =
     [ 
-        Grid.row [] [
-            Grid.col []
-            [
-                img [src "GitHub-Mark-32px.png"] [],
-                img [src "LI-In-Bug.png", width 40, height 32] []
-            ]
-        ],
         Grid.row [] [
             Grid.col [] [
                 div []
