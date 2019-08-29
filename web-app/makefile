@@ -13,7 +13,7 @@ css : src/Main.elm src/*.css
 html:
 	cp src/*.html build
 
-elm.js : src/Main.elm
+elm.js : src/*.elm
 	elm make src/Main.elm --output=build/elm.js
 
 clean :
@@ -28,4 +28,16 @@ background_run :
 	http-server build &> /dev/null &
 
 devserver :
-	 watch -n 3 "pkill node; make background_run"
+	watch -n 3 "pkill node; make background_run"
+
+optimize :  src/*.elm
+	elm make src/Main.elm --optimize --output=build/elm.opt.js
+	uglifyjs build/elm.opt.js --compress 'pure_funcs="F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9",pure_getters,keep_fargs=false,unsafe_comps,unsafe' | uglifyjs --mangle --output=build/elm.js
+	rm elm.opt.js
+	make css
+	make html
+	make assets
+
+run_optimize :
+	make optimize
+	http-server build
