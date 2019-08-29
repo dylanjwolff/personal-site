@@ -31,7 +31,7 @@ type alias Model =
 
 type Page
     = Home
-    | GettingStarted
+    | CV
     | Modules
     | NotFound
 
@@ -126,7 +126,7 @@ routeParser : Parser (Page -> a) a
 routeParser =
     UrlParser.oneOf
         [ UrlParser.map Home top
-        , UrlParser.map GettingStarted (s "getting-started")
+        , UrlParser.map CV (s "CV")
         , UrlParser.map Modules (s "modules")
         ]
 
@@ -152,7 +152,7 @@ menu model =
         |> Navbar.primary
         |> Navbar.brand [ href "#" ] [ text "Dylan Wolff" ]
         |> Navbar.items
-            [ Navbar.itemLink [ href "#getting-started" ] [ text "Getting started" ]
+            [ Navbar.itemLink [ href "#CV" ] [ text "CV" ]
             , Navbar.itemLink [ href "#modules" ] [ text "Modules" ]
             ]
         |> Navbar.view model.navState
@@ -165,8 +165,8 @@ mainContent model =
             Home ->
                 pageHome model
 
-            GettingStarted ->
-                pageGettingStarted model
+            CV ->
+                pageCV model
 
             Modules ->
                 pageModules model
@@ -183,12 +183,12 @@ pageHome model = [
             ]
         ],
         Grid.row [ Row.betweenXs ] [
-            Grid.col [ Col.orderLg12] [
+            Grid.col [ Col.md6, Col.orderMd12] [
                 div []
                     <| Markdown.toHtml Nothing "## About Me: \n I'm a graduate student at ETH Zurich pursuing a masters in Computer Science with a focus in Information Security. Specifically I am interested in leveraging static and dynamic program analysis (and verification) techniques to find and prevent bugs in software. Before starting my masters, I worked at Mathworks on a variety of projects, mostly involving the testing and deployment infrastructure for web applications. "
             ],
-            Grid.col [ Col.orderLg1 ] [
-                img [src "goat_cosine.png", height 500, width 500] [],
+            Grid.col [ Col.md6, Col.orderMd1 ] [
+                img [src "goat_cosine.png", class "img-fluid"] [],
                 Html.br [] [] 
             ]
         ],
@@ -198,12 +198,12 @@ pageHome model = [
             ]
         ],
         Grid.row [ Row.aroundXs ] [
-            Grid.col [] [
+            Grid.col [ Col.md6 ] [
                 div []
                     <| Markdown.toHtml Nothing "## Fun Facts: \n I'm a recovering ultimate frisbee addict, after 12 years of competative play, starting in high school. In that time I played in two different semi-professional leagues and also won a world championship in 2013 with team USA in Toronto."
             ],
-            Grid.col [] [
-                img [src "fris_cosine.png", height 500, width 500] []
+            Grid.col [ Col.md6 ] [
+                img [src "fris_cosine.png", class "img-fluid"] []
             ]            
         ],
         Grid.row [] [
@@ -214,16 +214,23 @@ pageHome model = [
     ]
 
 
-pageGettingStarted : Model -> List (Html Msg)
-pageGettingStarted model =
-    [ h2 [] [ text "Getting started" ]
-    , Button.button
-        [ Button.success
-        , Button.large
-        , Button.block
-        , Button.attrs [ onClick ShowModal ]
+pageCV : Model -> List (Html Msg)
+pageCV model =
+    [ 
+        Grid.row [] [
+            Grid.col []
+            [
+                img [src "GitHub-Mark-32px.png"] [],
+                img [src "LI-In-Bug.png", width 40, height 32] []
+            ]
+        ],
+        Grid.row [] [
+            Grid.col [] [
+                div []
+                    <| Markdown.toHtml Nothing "### EDUCATION \n ETHZ, BC"
+            ]
         ]
-        [ text "Click me" ]
+
     ]
 
 
