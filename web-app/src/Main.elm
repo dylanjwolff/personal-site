@@ -16,7 +16,6 @@ import Bootstrap.Card as Card
 import Bootstrap.Card.Block as Block
 import Bootstrap.Button as Button
 import Bootstrap.ListGroup as Listgroup
-import Bootstrap.Modal as Modal
 import Bootstrap.Utilities.Flex as Flex
 import HomeMD
 import CvMD
@@ -28,7 +27,6 @@ type alias Model =
     { navKey : Navigation.Key
     , page : Page
     , navState : Navbar.State
-    , modalVisibility : Modal.Visibility
     }
 
 type Page
@@ -56,19 +54,15 @@ init flags url key =
             Navbar.initialState NavMsg
 
         ( model, urlCmd ) =
-            urlUpdate url { navKey = key, navState = navState, page = Home, modalVisibility= Modal.hidden }
+            urlUpdate url { navKey = key, navState = navState, page = Home }
     in
         ( model, Cmd.batch [ urlCmd, navCmd ] )
-
-
 
 
 type Msg
     = UrlChange Url
     | ClickedLink UrlRequest
     | NavMsg Navbar.State
-    | CloseModal
-    | ShowModal
 
 
 subscriptions : Model -> Sub Msg
@@ -95,18 +89,6 @@ update msg model =
             ( { model | navState = state }
             , Cmd.none
             )
-
-        CloseModal ->
-            ( { model | modalVisibility = Modal.hidden }
-            , Cmd.none
-            )
-
-        ShowModal ->
-            ( { model | modalVisibility = Modal.shown }
-            , Cmd.none
-            )
-
-
 
 urlUpdate : Url -> Model -> ( Model, Cmd Msg )
 urlUpdate url model =
@@ -140,7 +122,6 @@ view model =
         [ div []
             [ menu model
             , mainContent model
-            , modal model
             ]
         ]
     }
@@ -252,23 +233,3 @@ pageNotFound =
     [ h1 [] [ text "Not found" ]
     , text "Sorry couldn't find that page"
     ]
-
-
-modal : Model -> Html Msg
-modal model =
-    Modal.config CloseModal
-        |> Modal.small
-        |> Modal.h4 [] [ text "Getting started ?" ]
-        |> Modal.body []
-            [ Grid.containerFluid []
-                [ Grid.row []
-                    [ Grid.col
-                        [ Col.xs6 ]
-                        [ text "Col 1" ]
-                    , Grid.col
-                        [ Col.xs6 ]
-                        [ text "Col 2" ]
-                    ]
-                ]
-            ]
-        |> Modal.view model.modalVisibility
