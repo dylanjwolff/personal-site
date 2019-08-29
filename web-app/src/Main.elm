@@ -19,6 +19,7 @@ import Bootstrap.ListGroup as Listgroup
 import Bootstrap.Utilities.Flex as Flex
 import HomeMD
 import CvMD
+import ProjectsMD 
 
 type alias Flags =
     {}
@@ -225,7 +226,20 @@ pageCV model =
 
 pageProjects : Model -> List (Html Msg)
 pageProjects model =
-    [ h1 [] [ text "Projects" ] ]
+    [ 
+        Grid.row [] [
+            Grid.col [] [
+                div []
+                    <| Markdown.toHtml Nothing ProjectsMD.deployerFixture
+            ]
+        ],
+        Grid.row [] [
+            Grid.col [] [
+                div []
+                    <| Markdown.toHtml Nothing ProjectsMD.bachelorThesis
+            ]
+        ]
+     ]
 
 
 pageNotFound : List (Html Msg)
