@@ -28,6 +28,7 @@ RUN make optimize
 FROM arm32v7/nginx:latest
 
 # Need QEMU to build ARM on x86_64 laptop
+# Theoretically, for production, this could be removed to trim the image size
 COPY qemu-arm-static /usr/bin
 
 ENV WORKDIR /usr/share/nginx/html
