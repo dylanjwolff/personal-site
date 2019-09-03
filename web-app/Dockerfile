@@ -34,5 +34,8 @@ WORKDIR $WORKDIR
 COPY --from=builder build .
 
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY personal-site.conf /etc/nginx/conf.d/nginx.conf
+
+RUN apk add certbot
 
 CMD nginx -g 'daemon off;'
