@@ -37,5 +37,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY personal-site.conf /etc/nginx/conf.d/personal-site.conf
 
 RUN apk add certbot
+RUN apk add apk-cron
 
-CMD nginx -g 'daemon off;'
+WORKDIR /opt
+COPY entrypoint.sh .
+CMD ./entrypoint.sh
