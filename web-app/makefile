@@ -41,3 +41,7 @@ optimize :  src/*.elm
 run_optimize :
 	make optimize
 	http-server build
+
+dbp :
+	docker build -t wolffdy/personal-site:arm32v7-latest -f Dockerfile.arm32v7 .
+	docker push wolffdy/personal-site:arm32v7-latest
