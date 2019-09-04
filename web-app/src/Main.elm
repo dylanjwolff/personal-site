@@ -157,28 +157,26 @@ menu model =
 
 mainContent : Model -> Html Msg
 mainContent model =
-    Grid.container [] <|
-        case model.page of
-            Home ->
-                pageHome model
+    div [] [
+        Html.br [] [],
+        Grid.container [] <|
+            case model.page of
+                Home ->
+                    pageHome model
 
-            CV ->
-                pageCV model
+                CV ->
+                    pageCV model
 
-            Projects ->
-                pageProjects model
+                Projects ->
+                    pageProjects model
 
-            NotFound ->
-                pageNotFound
+                NotFound ->
+                    pageNotFound
+    ]
 
 
 pageHome : Model -> List (Html Msg)
 pageHome model = [
-        Grid.row [] [
-            Grid.col [] [
-                Html.br [] []
-            ]
-        ],
         Grid.row [ Row.betweenXs ] [
             Grid.col [ Col.md6, Col.orderMd12] [
                 div []

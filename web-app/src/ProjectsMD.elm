@@ -18,5 +18,8 @@ applications. Scraped media files from various websites and did a 14 hour run
 against VLC media player with 4 computers * 2-4 processes per computer, finding
 ~4 bugs (from unique instruction pointers). Did an informal analysis of the
 impact of various fuzzing parameters on the ability of the fuzzer to find these
-bugs 
+bugs
+
+### Product Cloud Install Manager
+Uses Akka Streams for a pipeline to install builds of MATLAB in AWS instances for testing prerelease versions of the product
 """
