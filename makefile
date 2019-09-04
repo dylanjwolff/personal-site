@@ -10,4 +10,5 @@ push-arm :
 	docker push wolffdy/personal-site:arm32v7-latest
 
 deploy :
+	make push-arm
 	ssh pi@getroutahere.servebeer.com < ops/launch_personal_site.sh

@@ -118,7 +118,7 @@ routeParser =
 
 view : Model -> Browser.Document Msg
 view model =
-    { title = "Dylan Wolff"
+    { title = "Dylan J Wolff"
     , body =
         [ div []
             [ menu model
@@ -134,7 +134,7 @@ menu model =
     Navbar.config NavMsg
         |> Navbar.withAnimation
         |> Navbar.primary
-        |> Navbar.brand [ href "#" ] [ text "Dylan Wolff" ]
+        |> Navbar.brand [ href "#" ] [ text "Dylan J Wolff" ]
         |> Navbar.items
             [ Navbar.itemLink [ href "#CV" ] [ text "CV" ]
             , Navbar.itemLink [ href "#projects" ] [ text "Projects" ]
