@@ -11,10 +11,10 @@ RUN gunzip -c binary-for-linux-64-bit.gz > elm
 RUN mv elm /usr/bin/
 RUN chmod a+x /usr/bin/elm
 
-COPY makefile ./
-COPY elm.json ./
+COPY web-app/makefile ./
+COPY web-app/elm.json ./
 RUN mkdir src
-COPY src src
+COPY web-app/src src
 
 RUN make optimize
 
@@ -23,22 +23,18 @@ RUN make optimize
 FROM nginx:alpine
 
 ENV WORKDIR /usr/share/nginx/html
-ENV USER personal-site
-RUN adduser -S -u 2000 -h /home/$USER $USER
 RUN mkdir -p $WORKDIR
-RUN chown $USER $WORKDIR
 
-# USER $USER
 WORKDIR $WORKDIR
 
 COPY --from=builder build .
 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY personal-site.conf /etc/nginx/conf.d/personal-site.conf
+COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY docker/nginx/personal-site.conf /etc/nginx/conf.d/personal-site.conf
 
 RUN apk add certbot
 RUN apk add apk-cron
 
 WORKDIR /opt
-COPY entrypoint.sh .
+COPY docker/entrypoint.sh .
 CMD ./entrypoint.sh

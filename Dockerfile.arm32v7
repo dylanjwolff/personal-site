@@ -16,10 +16,10 @@ RUN gunzip -c binary-for-linux-64-bit.gz > elm
 RUN mv elm /usr/bin/
 RUN chmod a+x /usr/bin/elm
 
-COPY makefile ./
-COPY elm.json ./
+COPY web-app/makefile ./
+COPY web-app/elm.json ./
 RUN mkdir src
-COPY src src
+COPY web-app/src src
 
 RUN make optimize
 
@@ -29,7 +29,7 @@ FROM arm32v7/nginx:latest
 
 # Need QEMU to build ARM on x86_64 laptop
 # Theoretically, for production, this could be removed to trim the image size
-COPY qemu-arm-static /usr/bin
+COPY docker/qemu-arm-static /usr/bin
 
 # Rolling certbot into the same container, not sure if there is value to using
 # docker-compose and a dedicated service
@@ -43,9 +43,9 @@ WORKDIR $WORKDIR
 
 COPY --from=builder build .
 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY personal-site.conf /etc/nginx/conf.d/personal-site.conf
+COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY docker/nginx/personal-site.conf /etc/nginx/conf.d/personal-site.conf
 
 WORKDIR /opt
-COPY entrypoint.sh .
+COPY docker/entrypoint.sh .
 CMD ./entrypoint.sh
