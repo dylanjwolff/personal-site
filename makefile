@@ -5,6 +5,10 @@ deploy :
 web-app :
 	make web-app:optimize
 
+container-arm64-insec : Dockerfile.insecure docker/*
+	make web-app
+	docker build -t wolffdy/personal-site:insecure-latest -f Dockerfile.insecure .
+
 container-arm64 : Dockerfile.arm64v8 docker/*
 	make web-app
 	docker build -t wolffdy/personal-site:arm64v8-latest -f Dockerfile.arm64v8 .
