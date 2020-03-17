@@ -21,3 +21,8 @@ push-arm :
 	make container-arm
 	docker push wolffdy/personal-site:arm32v7-latest
 
+push-arm64-insec :
+	make container-arm64-insec
+	docker push wolffdy/personal-site:insecure-latest
+
+
