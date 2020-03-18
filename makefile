@@ -5,9 +5,9 @@ deploy :
 web-app :
 	make web-app:optimize
 
-container-arm64-insec : Dockerfile.insecure docker/*
+container-arm64-insec : Dockerfile.alt docker/* static/*
 	make web-app
-	docker build -t wolffdy/personal-site:insecure-latest -f Dockerfile.insecure .
+	docker build -t wolffdy/personal-site:insecure-latest -f Dockerfile.alt .
 
 container-arm64 : Dockerfile.arm64v8 docker/*
 	make web-app
