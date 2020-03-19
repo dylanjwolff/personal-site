@@ -1,7 +1,3 @@
-deploy :
-	make push-arm
-	ssh pi@getroutahere.servebeer.com < ops/launch_personal_site.sh
-
 web-app :
 	make web-app:optimize
 
