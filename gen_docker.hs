@@ -7,7 +7,10 @@
 import Turtle
 import Data.Text
 
-main = output "Dockerfile.x86_64" $ get_x86_64 "template.Dockerfile"
+main = let template = "template.Dockerfile" in
+       do
+        output "Dockerfile.x86_64" $ get_x86_64 template
+        output "Dockerfile.arm64v8" $ get_arm64 template
 
 get_arm64 f = subst_nginx "arm64v8/nginx" $ subst_qarch "aarch64" $ input f
 get_x86_64 f = subst_nginx "nginx" $ subst_qarch "fake-x86_64" $ input f

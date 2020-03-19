@@ -5,24 +5,29 @@ deploy :
 web-app :
 	make web-app:optimize
 
-container-arm64-insec : Dockerfile.alt docker/* static/*
-	make web-app
-	docker build -t wolffdy/personal-site:insecure-latest -f Dockerfile.alt .
+dockerfiles : template.Dockerfile
+	./gen_docker.hs
 
-container-arm64 : Dockerfile.arm64v8 docker/*
-	make web-app
-	docker build -t wolffdy/personal-site:arm64v8-latest -f Dockerfile.arm64v8 .
+container-arm64-notls : docker/* static/*
+	make dockerfiles
+	docker build -t wolffdy/personal-site-arm64v8-notls:latest -f Dockerfile.arm64v8 .
 
-container-arm : Dockerfile.arm32v7 docker/*
-	make web-app
-	docker build -t wolffdy/personal-site:arm32v7-latest -f Dockerfile.arm32v7 .
+container-x86_64-notls : docker/* static/*
+	make dockerfiles
+	docker build -t wolffdy/personal-site-x86_64-notls:latest -f Dockerfile.x86_64 .
 
-push-arm :
-	make container-arm
-	docker push wolffdy/personal-site:arm32v7-latest
+containers :
+	make container-arm64-notls
+	make container-x86_64-notls
 
-push-arm64-insec :
-	make container-arm64-insec
-	docker push wolffdy/personal-site:insecure-latest
+run-local :
+	make container-x86_64-notls
+	docker run -P wolffdy/personal-site-:latest
 
+push-arm64-notls :
+	make container-arm64-notls
+	docker push wolffdy/personal-site-arm64v8-notls:latest
 
+deploy-arm64-notls :
+	make push-arm64-notls
+	kubectl replace -f ops/deploy.yaml
